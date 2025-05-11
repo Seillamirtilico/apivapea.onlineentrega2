@@ -3,7 +3,7 @@ const router = express.Router();
 const productoSchema = require("../models/productoModel");
 
 // Crear un nuevo producto
-router.post("/productos", (req, res) => {
+router.post("/", (req, res) => {
   const producto = new productoSchema(req.body);
   producto
     .save()
@@ -12,7 +12,7 @@ router.post("/productos", (req, res) => {
 });
 
 // Obtener todos los productos
-router.get("/productos", (req, res) => {
+router.get("/", (req, res) => {
   productoSchema
     .find()
     .then((data) => res.json(data))
@@ -20,7 +20,7 @@ router.get("/productos", (req, res) => {
 });
 
 // Obtener un producto por ID
-router.get("/productos/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const { id } = req.params;
   productoSchema
     .findById(id)
@@ -32,7 +32,7 @@ router.get("/productos/:id", (req, res) => {
 });
 
 // Actualizar un producto por ID
-router.put("/productos/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   const { id } = req.params;
   productoSchema
     .findByIdAndUpdate(id, req.body, { new: true })
@@ -44,7 +44,7 @@ router.put("/productos/:id", (req, res) => {
 });
 
 // Eliminar un producto por ID
-router.delete("/productos/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   const { id } = req.params;
   productoSchema
     .findByIdAndDelete(id)
