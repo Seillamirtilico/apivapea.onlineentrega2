@@ -49,7 +49,7 @@ router.put("/usuarios/:id", async (req, res) => {
   }
 });
 
-// Eliminar un usuario por ID
+// Eliminar un usuario por ID.
 router.delete("/usuarios/:id", async (req, res) => {
   try {
     const usuarioEliminado = await usuarioSchema.findByIdAndDelete(req.params.id);
@@ -60,4 +60,4 @@ router.delete("/usuarios/:id", async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
