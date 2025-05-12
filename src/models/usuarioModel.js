@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const usuarioSchema = new mongoose.Schema({
   nombre: {
@@ -33,21 +32,16 @@ const usuarioSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Hash de contraseña antes de guardar
+// Eliminar el hash de la contraseña en pre-save ya que no queremos encriptarla
 usuarioSchema.pre("save", async function (next) {
-  if (!this.isModified("contraseña")) return next();
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.contraseña = await bcrypt.hash(this.contraseña, salt);
-    next();
-  } catch (err) {
-    next(err);
-  }
+  // No es necesario realizar nada con la contraseña antes de guardar
+  next();
 });
 
-// Método para verificar contraseña
-usuarioSchema.methods.compararContraseña = async function (contraseñaIngresada) {
-  return await bcrypt.compare(contraseñaIngresada, this.contraseña);
+// Ya no necesitamos el método para comparar la contraseña
+usuarioSchema.methods.compararContraseña = function (contraseñaIngresada) {
+  // Simplemente comparamos la contraseña directamente (aunque no es seguro hacerlo)
+  return this.contraseña === contraseñaIngresada;
 };
 
 module.exports = mongoose.model("Usuario", usuarioSchema);
