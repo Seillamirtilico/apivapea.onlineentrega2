@@ -3,16 +3,20 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 const productoRoutes = require("./routes/productoRoutes");
-const usuarioRoutes = require("./routes/usuarioRoute"); // ✅ IMPORTACIÓN DE LAS RUTAS DE USUARIO
+const usuarioRoutes = require("./routes/usuarioRoute");
+const ordenRoutes = require("./routes/ordenRoute");         // ✅ NUEVA RUTA
+const comentarioRoutes = require("./routes/comentarioRoute"); // ✅ NUEVA RUTA
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// ✅ REGISTRO DE LAS RUTAS ANTES DEL MANEJADOR DE ERRORES
+// ✅ REGISTRO DE LAS RUTAS
 app.use("/api/productos", productoRoutes);
-app.use("/api/usuarios", usuarioRoutes); // ✅ AQUÍ VA ESTA LÍNEA
+app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/ordenes", ordenRoutes);           // ✅ REGISTRO DE RUTA DE ÓRDENES
+app.use("/api/comentarios", comentarioRoutes);  // ✅ REGISTRO DE RUTA DE COMENTARIOS
 
 // ❌ ESTA RUTA CATCH-ALL VA AL FINAL
 app.use((req, res) => {
